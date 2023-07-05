@@ -7,6 +7,7 @@ import (
 	witai "github.com/wit-ai/wit-go/v2"
 	"gopkg.in/hraban/opus.v2"
 	"io"
+	"os"
 )
 
 func main() {
@@ -47,8 +48,9 @@ func Recognize(fileBody []byte) (string, error) {
 		return "", err
 	}
 
-	client := witai.NewClient("Bearer 7VG6LHATN2S5W5PCHSOA6MP7HJ3CO2LF")
+	client := witai.NewClient(os.Getenv("witai_token"))
 	msg, err := client.Speech(&witai.MessageRequest{
+
 		Speech: &witai.Speech{
 			File:        audioRawBuffer,
 			ContentType: "audio/raw;encoding=signed-integer;bits=16;rate=48000;endian=little",

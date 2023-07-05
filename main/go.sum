@@ -1,0 +1,4 @@
+github.com/wit-ai/wit-go/v2 v2.0.2 h1:poO2FW2eQqfb3iMf/54KA7nSTYkLlI7n/wu7bYubomY=
+github.com/wit-ai/wit-go/v2 v2.0.2/go.mod h1:3uAerZ/h9riAOquOZc5/qPinCXrzeBO3KL/r208FWos=
+gopkg.in/hraban/opus.v2 v2.0.0-20220302220929-eeacdbcb92d0 h1:B8lK1KhYrE4H3urNYBAL/UquYftW65IHPY8JP3gpZ4M=
+gopkg.in/hraban/opus.v2 v2.0.0-20220302220929-eeacdbcb92d0/go.mod h1:/L5E7a21VWl8DeuCPKxQBdVG5cy+L0MRZ08B1wnqt7g=

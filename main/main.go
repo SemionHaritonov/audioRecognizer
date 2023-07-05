@@ -4,9 +4,11 @@ import (
 	"bytes"
 	"encoding/binary"
 	"fmt"
-	witai "github.com/wit-ai/wit-go/v2"
 	"gopkg.in/hraban/opus.v2"
 	"io"
+	"io/ioutil"
+	"log"
+	"net/http"
 	"os"
 )
 
@@ -48,17 +50,25 @@ func Recognize(fileBody []byte) (string, error) {
 		return "", err
 	}
 
-	client := witai.NewClient(os.Getenv("witai_token"))
-	msg, err := client.Speech(&witai.MessageRequest{
-
-		Speech: &witai.Speech{
-			File:        audioRawBuffer,
-			ContentType: "audio/raw;encoding=signed-integer;bits=16;rate=48000;endian=little",
-		},
-	})
+	url := "https://api.wit.ai/dictation"
+	client := &http.Client{}
+	request, err := http.NewRequest("POST", url, audioRawBuffer)
 	if err != nil {
 		return "", err
 	}
 
-	return msg.Text, nil
+	request.Header.Set("Authorization", os.Getenv("witai_token"))
+	request.Header.Set("Content-Type", "audio/raw")
+	request.Header.Set("Content-Type", "audio/raw;encoding=signed-integer;bits=16;rate=48000;endian=little")
+
+	result, err := client.Do(request)
+	if err != nil {
+		return "", err
+	}
+
+	body, err := ioutil.ReadAll(result.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return string(body), nil
 }
